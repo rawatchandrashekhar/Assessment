@@ -28,6 +28,7 @@ const Home = () => {
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
 
+  // fetching image data
   const handleGetImageData = async () => {
     try {
       setBtnLoader(true);

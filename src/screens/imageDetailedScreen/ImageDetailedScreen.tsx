@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
   ScrollView,
   Text,
-  ToastAndroid,
   View,
 } from 'react-native';
 import {Formik} from 'formik';
@@ -20,6 +20,7 @@ import {RootStackParamList} from '../../navigation/NavigationType';
 import {getMimeType} from '../../utils';
 import {APIEndpoints} from '../../API/APIEndpoints';
 
+// Initial values for form
 const initialValues: FormValuesType = {
   firstName: '',
   lastName: '',
@@ -28,11 +29,13 @@ const initialValues: FormValuesType = {
 };
 
 const ImageDetailedScreen = () => {
+  // Extracting the params that are passed from the home screen
   const {params} =
     useRoute<RouteProp<RootStackParamList, 'ImageDetailedScreen'>>();
 
   const [btnLoader, setBtnLoader] = useState(false);
 
+  // submitting the form data
   const handleFormSubmit = async (values: FormValuesType, {resetForm}: any) => {
     try {
       setBtnLoader(true);
@@ -57,10 +60,11 @@ const ImageDetailedScreen = () => {
       if (result?.status === 'success') {
         setBtnLoader(false);
         resetForm();
-        ToastAndroid.show(result?.message, ToastAndroid.SHORT);
+        Alert.alert(result?.message);
       }
-    } catch (error) {
+    } catch (error: any) {
       setBtnLoader(false);
+      Alert.alert(error?.message);
     }
   };
 
